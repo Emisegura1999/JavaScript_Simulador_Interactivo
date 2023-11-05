@@ -2,19 +2,75 @@
 <html>
 
 <head>
-    <title>Calculadora de Promedio de Alumnos</title>
+    <title>Login y Registro</title>
+    <link rel="stylesheet" type="text/css" href="estilo.css">
 </head>
 
 <body>
-    <h1>Calculadora de Promedio de Alumnos</h1>
+    <div class="container">
+        <h1>Login y Registro</h1>
+        <div id="login-form">
+            <h2>Iniciar Sesión</h2>
+            <form id="form-login">
+                <label for="nombre-login">Nombre Completo:</label>
+                <input type="text" id="nombre-login" required>
+                <label for="contrasena-login">Contraseña:</label>
+                <input type="password" id="contrasena-login" required>
+                <button type="submit" id="iniciar-sesion">Iniciar Sesión</button>
+            </form>
+            <p><a id="mostrar-registro" href="#">Registrarse</a></p>
+        </div>
 
-    <button id="ingresarNotasBtn" onclick="ingresarNotas()">Ingresar Notas</button>
-    <button id="calcularPromedioBtn" onclick="calcularPromedios()">Calcular Promedio</button>
-    <button id="filtroAvanzadoBtn" onclick="filtroAvanzado()">Filtro Avanzado</button>
-    <button id="agregarAlumnoBtn" onclick="agregarAlumno()">Agregar Alumno</button>
-    <button id="eliminarAlumnoBtn" onclick="eliminarAlumno()">Eliminar Alumno</button>
+        <div id="registro-form" style="display: none;">
+            <h2>Registrarse</h2>
+            <form id="form-registro">
+                <label for="nombre-registro">Nombre Completo:</label>
+                <input type="text" id="nombre-registro" required>
+                <label for="contrasena-registro">Contraseña:</label>
+                <input type="password" id="contrasena-registro" required>
+                <button type="submit" id="registrarse">Registrarse</button>
+            </form>
+            <p><a id="mostrar-login" href="#">Iniciar Sesión</a></p>
+        </div>
 
-    <script src="./promedio-alumnos.js"></script>
+        <p id="mensaje-error" style="display: none;"></p>
+        <p id="mensaje-error-registro" style="display: none;"></p>
+
+        
+        <div id="bienvenida" style="display: none;">
+            <h2>Bienvenido</h2>
+            <p id="nombre-bienvenida"></p>
+        </div>
+
+    </div>
+
+            <h1>Gestión de Notas de Alumnos</h1>
+        
+            <div id="agregar-alumno" style="display: none;">
+                <h2>Agregar Alumno</h2>
+                <input type="text" id="nombre" placeholder="Nombre del alumno">
+                <input type="number" id="nota1" placeholder="Nota 1 (1-10)">
+                <input type="number" id="nota2" placeholder="Nota 2 (1-10)">
+                <input type="number" id="nota3" placeholder="Nota 3 (1-10)">
+                <button onclick="agregarAlumno()">Agregar Alumno</button>
+            </div>
+
+            <!-- Formulario para modificar notas de un alumno -->
+            <div id="formulario-modificar" style="display: none;">
+                <h2>Modificar Alumno</h2>
+                <input type="number" id="nuevaNota1" placeholder="Nueva Nota 1 (1-10)">
+                <input type="number" id="nuevaNota2" placeholder="Nueva Nota 2 (1-10)">
+                <input type="number" id="nuevaNota3" placeholder="Nueva Nota 3 (1-10)">
+                <button onclick="modificarNotas()">Guardar Modificación</button>
+            </div>
+
+        
+            <div id="alumnos-list">
+
+            </div>
+        
+            <script src="script.js"></script>
+
 </body>
 
 </html>

@@ -1,0 +1,32 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    background-color: #0074cc;
+    color: white;
+    padding: 10px;
+    margin: 0;
+}
+
+div {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px #888888;
+}
+
+input,
+button {
+    display: block;
+    margin: 10px 0;
+}
+
+#alumnos-list {
+    margin-top: 20px;
+}
