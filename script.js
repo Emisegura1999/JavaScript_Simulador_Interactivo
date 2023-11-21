@@ -21,14 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuarioEncontrado = usuariosRegistrados.find(usuario => usuario.nombre === nombreLogin && usuario.contrasena === contrasenaLogin);
 
         if (usuarioEncontrado) {
-           mostrarBienvenida(usuarioEncontrado);
-            } else {
-        const mensajeError = document.getElementById("mensaje-error");
-              mensajeError.textContent = "Credenciales incorrectas. Por favor, inténtalo de nuevo.";
-              mensajeError.style.color = "red";
-              mensajeError.style.display = "block";          
-            }
-
+            mostrarBienvenida(usuarioEncontrado);
+        } else {
+            mostrarError("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+        }
     });
 
     formRegistro.addEventListener("submit", function (e) {
@@ -40,18 +36,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const usuarioExistente = usuariosRegistrados.find(usuario => usuario.nombre === nombreRegistro);
 
         if (usuarioExistente) {
-        const mensajeErrorRegistro = document.getElementById("mensaje-error-registro");
-              mensajeErrorRegistro.textContent = "El usuario ya está registrado. Por favor, elige otro nombre.";
-              mensajeErrorRegistro.style.color = "red";
-              mensajeErrorRegistro.style.display = "block";
-         } else {
-        const nuevoUsuario = { nombre: nombreRegistro, contrasena: contrasenaRegistro };
-              usuariosRegistrados.push(nuevoUsuario);
-              localStorage.setItem("usuariosRegistrados", JSON.stringify(usuariosRegistrados));
+            mostrarError("El usuario ya está registrado. Por favor, elige otro nombre.");
+        } else {
+            const nuevoUsuario = { nombre: nombreRegistro, contrasena: contrasenaRegistro };
+            usuariosRegistrados.push(nuevoUsuario);
+            localStorage.setItem("usuariosRegistrados", JSON.stringify(usuariosRegistrados));
 
-    mostrarBienvenida(nuevoUsuario);
-}
-
+            mostrarBienvenida(nuevoUsuario);
+        }
     });
 
     mostrarRegistroLink.addEventListener("click", function (e) {
@@ -66,7 +58,16 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("registro-form").style.display = "none";
     });
 
-    function mostrarBienvenida(usuario) {
+     function mostrarBienvenida(usuario) {
+        return new Promise((resolve) => {
+            Toastify({
+                text: `¡Bienvenido, ${usuario.nombre}!`,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: 'right',
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)"
+            }).showToast();
 
         const mensajeError = document.getElementById("mensaje-error");
         mensajeError.style.display = "none";
@@ -79,10 +80,29 @@ document.addEventListener("DOMContentLoaded", function () {
         bienvenida.style.display = "block";
         nombreBienvenida.textContent = `Bienvenido, ${usuario.nombre}!`;
         document.getElementById("agregar-alumno").style.display = "block";
+
+        resolve();
+
+          });
+    }
+     
+
+   function mostrarError(mensaje) {
+        return new Promise((resolve) => {
+            Toastify({
+                text: mensaje,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: 'right',
+                backgroundColor: "#ff0000"
+            }).showToast();
+
+            resolve(); 
+        });
     }
 
-});
-
+})
 
 // Función para agregar un nuevo alumno
 function agregarAlumno() {
@@ -91,7 +111,7 @@ function agregarAlumno() {
     const nota2 = parseInt(document.getElementById("nota2").value);
     const nota3 = parseInt(document.getElementById("nota3").value);
 
-    // Validar que las notas estén en el rango de 1 a 10
+   
     if (nota1 >= 1 && nota1 <= 10 && nota2 >= 1 && nota2 <= 10 && nota3 >= 1 && nota3 <= 10) {
         // Crea un objeto alumno
         const alumno = {
@@ -102,14 +122,14 @@ function agregarAlumno() {
         // Obtener la lista de alumnos del almacenamiento local
         const alumnos = JSON.parse(localStorage.getItem("alumnos")) || [];
 
-        // Agregar el nuevo alumno a la lista (hasta un máximo de 10 alumnos)
+        
         if (alumnos.length < 10) {
             alumnos.push(alumno);
 
             // Guardar la lista de alumnos en el almacenamiento local
             localStorage.setItem("alumnos", JSON.stringify(alumnos));
 
-            // Actualizar la lista de alumnos en el DOM
+            
             mostrarAlumnos();
 
             // Limpiar los campos de entrada
@@ -203,6 +223,6 @@ function modificarNotas() {
     }
 }
 
-
+     
 // Mostrar la lista de alumnos al cargar la página
 mostrarAlumnos();
